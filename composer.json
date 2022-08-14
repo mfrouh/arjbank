@@ -5,8 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Mfrouh\\ArjBank\\": "src/",
-            "Mfrouh\\ArjBank\\tests\\": "tests/"
+            "Mfrouh\\ArjBank\\": "src"
         }
     },
     "authors": [

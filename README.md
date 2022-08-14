@@ -1,1 +1,1 @@
-Package Payment GateWay With Alrajhi Bank with laravel
+Package Payment Gateway With Alrajhi Bank with laravel
