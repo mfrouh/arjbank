@@ -14,7 +14,7 @@ class ArjBankServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'ArjBank');
+        $this->mergeConfigFrom(__DIR__ . '/../config/ArjBank.php', 'ArjBank');
 
         $this->app->bind('ArjBank', function ($app) {
             return new BaseClass();
@@ -26,7 +26,7 @@ class ArjBankServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('ArjBank.php'),
+                __DIR__ . '/../config/ArjBank.php' => config_path('ArjBank.php'),
             ], 'config');
         }
     }
