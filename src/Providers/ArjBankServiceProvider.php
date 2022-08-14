@@ -27,7 +27,7 @@ class ArjBankServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__ . '/../config/ArjBank.php' => config_path('ArjBank.php'),
-            ], 'config');
+            ], 'ArjBank');
         }
     }
 }
