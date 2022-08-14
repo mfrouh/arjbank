@@ -1,6 +1,6 @@
 <?php
 
-namespace Mfrouh\ArjBanka\Facades;
+namespace MFrouh\ArjBanka\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

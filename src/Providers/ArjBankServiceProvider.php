@@ -1,8 +1,8 @@
 <?php
 
-namespace Mfrouh\ArjBank\Providers;
+namespace MFrouh\ArjBank\Providers;
 
-use Mfrouh\ArjBank\BaseClass;
+use MFrouh\ArjBank\BaseClass;
 use Illuminate\Support\ServiceProvider;
 
 class ArjBankServiceProvider extends ServiceProvider

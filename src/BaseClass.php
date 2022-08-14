@@ -1,6 +1,6 @@
 <?php
 
-namespace Mfrouh\ArjBank;
+namespace MFrouh\ArjBank;
 
 class BaseClass
 {
