@@ -4,7 +4,7 @@ namespace MFrouh\ArjBank;
 
 class BaseClass
 {
-    public function Payment(array $paymentData,int $amount, string $response_url, string $error_url)
+    public function Payment(array $paymentData, int $amount, string $response_url, string $error_url)
     {
         $trackId = rand(111111111, 999999999);
 
@@ -59,6 +59,21 @@ class BaseClass
         } else {
             return ["status" => 'fail', "message" => $response_data["result"]];
         }
+    }
+
+    public function result($data)
+    {
+        $decrypted = $this->decryption($data, config('ArjBank.resource_key'));
+        $raw = urldecode($decrypted);
+        $dataArr = json_decode($raw, true);
+        if (isset($dataArr[0]['errorText'])) {
+            return ["status" => 400, 'data' => $dataArr[0]];
+        }
+        $paymentStatus = $dataArr[0]["result"];
+        if (isset($paymentStatus) && $paymentStatus === 'CAPTURED') {
+            return ["status" => 200, 'data' => $dataArr[0]];
+        }
+        return ["status" => 400, 'data' => $dataArr[0]];
     }
 
     private function encryption($str, $key)
