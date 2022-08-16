@@ -32,7 +32,7 @@ class BaseClass
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => config('ArjBank.mode') == 'live' ? config('ArjBank.live_url') : config('ArjBank.test_url'),
+            CURLOPT_URL => config('ArjBank.mode') == 'live' ? config('ArjBank.live_endpoint') : config('ArjBank.test_endpoint'),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
