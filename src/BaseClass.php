@@ -4,7 +4,7 @@ namespace MFrouh\ArjBank;
 
 class BaseClass
 {
-    public function Payment(array $paymentData, int $amount, string $response_url, string $error_url)
+    public function payment(array $paymentData, int $amount = 0, string $response_url, string $error_url)
     {
         $trackId = rand(111111111, 999999999);
 
