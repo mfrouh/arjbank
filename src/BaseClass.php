@@ -39,19 +39,54 @@ class BaseClass
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_SSL_VERIFYPEER=> false,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $encodedData,
-
+            CURLOPT_POSTFIELDS =>  $encodedData,
             CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Accept-Language: application/json',
-                'Content-Type: application/json',
-            ),
+                'Content-Type: application/json'
+            )
         ));
 
         $response = curl_exec($curl);
+
         curl_close($curl);
+        // echo $response;
+        // $curl = curl_init();
+
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', "csrf-token:$token"));
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $responseData = curl_exec($ch);
+        // if (curl_errno($ch)) {
+        //     return curl_error($ch);
+        // }
+        // curl_close($ch);
+        // $responseData = json_decode($responseData, true);
+
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => config('ArjBank.mode') == 'live' ? config('ArjBank.live_endpoint') : config('ArjBank.test_endpoint'),
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => '',
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 0,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_SSL_VERIFYPEER => false,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => $encodedData,
+
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Accept: application/json',
+        //         'Accept-Language: application/json',
+        //         'Content-Type: application/json',
+        //     ),
+        // ));
+
+        // $response = curl_exec($curl);
+        // curl_close($curl);
         $response_data = json_decode($response, true)[0];
 
         if ($response_data["status"] == "1") {
