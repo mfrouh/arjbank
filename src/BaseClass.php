@@ -58,7 +58,7 @@ class BaseClass
             $url = "https:" . explode(":", $response_data["result"])[2];
             return ["status" => 'success', "url" => $url];
         } else {
-            return ["status" => 'fail', "message" => $response_data["result"]];
+            return ["status" => 'fail', "message" => $response_data];
         }
     }
 
