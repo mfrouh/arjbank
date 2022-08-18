@@ -2,6 +2,8 @@
 
 namespace MFrouh\ArjBank;
 
+use Illuminate\Support\Facades\Http;
+
 class BaseClass
 {
     public function payment(array $paymentData, int $amount = 0, string $response_url, string $error_url)
@@ -19,7 +21,7 @@ class BaseClass
             "amt" => $amount,
         ] + $paymentData;
 
-        $encoded_data = json_encode($data, JSON_UNESCAPED_SLASHES);
+        $encoded_data = $this->wrapData(json_encode($data));
 
         $encryptedData = [
             "id" => config('ArjBank.transportal_id'),
@@ -28,37 +30,18 @@ class BaseClass
             "errorURL" => $error_url,
         ];
 
-        $encodedData = json_encode($encryptedData, JSON_UNESCAPED_SLASHES);
+        $encodedData = $this->wrapData(json_encode($encryptedData));
 
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => config('ArjBank.mode') == 'live' ? config('ArjBank.live_endpoint') : config('ArjBank.test_endpoint'),
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>$this->wrapData($encodedData),
+        $response = Http::withBody($encodedData, 'application/json')->withOptions(['verify' => false])
+            ->post(config('ArjBank.mode') == 'live' ? config('ArjBank.live_endpoint') : config('ArjBank.test_endpoint'));
 
-            CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Accept-Language: application/json',
-                'Content-Type: application/json',
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
         $response_data = json_decode($response, true)[0];
 
         if ($response_data["status"] == "1") {
             $url = "https:" . explode(":", $response_data["result"])[2];
-            return ["status" => 'success', "url" => $url];
+            return ["status" => '1', "url" => $url];
         } else {
-            return ["status" => 'fail', "message" => $response_data];
+            return ["status" => '2', "message" => $response_data];
         }
     }
 
@@ -72,9 +55,9 @@ class BaseClass
         }
         $paymentStatus = $dataArr[0]["result"];
         if (isset($paymentStatus) && $paymentStatus === 'CAPTURED') {
-            return ["status" => 200, 'data' => $dataArr[0]];
+            return ["status" => '1', 'data' => $dataArr[0]];
         }
-        return ["status" => 400, 'data' => $dataArr[0]];
+        return ["status" => '2', 'data' => $dataArr[0]];
     }
 
     private function encryption($str, $key)
