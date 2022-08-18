@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Http;
 
 class BaseClass
 {
-    public function payment(array $paymentData, int $amount = 0, string $response_url, string $error_url)
+    public function merchantPayment(array $paymentData, int $amount = 0, string $response_url, string $error_url)
     {
         $trackId = rand(111111111, 999999999);
 
         $data = [
-            "id" => config('ArjBank.transportal_id'),
-            "password" => config('ArjBank.transportal_password'),
+            "id" => config('ArjBank.tranportal_id'),
+            "password" => config('ArjBank.tranportal_password'),
             "action" => "1",
             "currencyCode" => "682",
             "responseURL" => $response_url,
@@ -24,7 +24,7 @@ class BaseClass
         $encoded_data = $this->wrapData(json_encode($data));
 
         $encryptedData = [
-            "id" => config('ArjBank.transportal_id'),
+            "id" => config('ArjBank.tranportal_id'),
             "trandata" => $this->encryption($encoded_data, config('ArjBank.resource_key')),
             "responseURL" => $response_url,
             "errorURL" => $error_url,
@@ -33,7 +33,7 @@ class BaseClass
         $encodedData = $this->wrapData(json_encode($encryptedData));
 
         $response = Http::withBody($encodedData, 'application/json')->withOptions(['verify' => false])
-            ->post(config('ArjBank.mode') == 'live' ? config('ArjBank.live_endpoint') : config('ArjBank.test_endpoint'));
+            ->post(config('ArjBank.mode') == 'live' ? config('ArjBank.live_merchant_endpoint') : config('ArjBank.test_merchant_endpoint'));
 
         $response_data = json_decode($response, true)[0];
 
@@ -41,7 +41,46 @@ class BaseClass
             $url = "https:" . explode(":", $response_data["result"])[2];
             return ["status" => '1', "url" => $url];
         } else {
-            return ["status" => '2', "message" => $response_data];
+            return ["status" => '2', "message" => $response_data["errorText"]];
+        }
+    }
+
+    public function bankHostedPayment(int $amount = 0, string $response_url, string $error_url)
+    {
+        $trackId = rand(111111111, 999999999);
+
+        $data = [
+            "id" => config('ArjBank.tranportal_id'),
+            "password" => config('ArjBank.tranportal_password'),
+            "action" => "1",
+            "currencyCode" => "682",
+            "responseURL" => $response_url,
+            "errorURL" => $error_url,
+            "trackId" => (string) $trackId,
+            "amt" => (string) $amount,
+        ];
+
+        $encoded_data = $this->wrapData(json_encode($data));
+
+        $encryptedData = [
+            "id" => config('ArjBank.tranportal_id'),
+            "trandata" => $this->encryption($encoded_data, config('ArjBank.resource_key')),
+            "responseURL" => $response_url,
+            "errorURL" => $error_url,
+        ];
+
+        $encodedData = $this->wrapData(json_encode($encryptedData));
+
+        $response = Http::withBody($encodedData, 'application/json')->withOptions(['verify' => false])
+            ->post(config('ArjBank.mode') == 'live' ? config('ArjBank.live_bank_hosted_endpoint') : config('ArjBank.test_bank_hosted_endpoint'));
+
+        $response_data = json_decode($response, true)[0];
+
+        if ($response_data["status"] == "1") {
+            $url = "https:" . explode(":", $response_data["result"])[2].'?PaymentID='.explode(":", $response_data["result"])[1];
+            return ["status" => '1', "url" => $url];
+        } else {
+            return ["status" => '2', "message" => $response_data["errorText"]];
         }
     }
 
