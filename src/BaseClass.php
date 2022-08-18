@@ -17,8 +17,8 @@ class BaseClass
             "currencyCode" => "682",
             "responseURL" => $response_url,
             "errorURL" => $error_url,
-            "trackId" => $trackId,
-            "amt" => $amount,
+            "trackId" => (string) $trackId,
+            "amt" => (string) $amount,
         ] + $paymentData;
 
         $encoded_data = $this->wrapData(json_encode($data));
