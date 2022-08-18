@@ -77,7 +77,7 @@ class BaseClass
         $response_data = json_decode($response, true)[0];
 
         if ($response_data["status"] == "1") {
-            $url = "https:" . explode(":", $response_data["result"])[2].'?PaymentID='.explode(":", $response_data["result"])[1];
+            $url = "https:" . explode(":", $response_data["result"])[2].'?PaymentID='.explode(":", $response_data["result"])[0];
             return ["status" => '1', "url" => $url];
         } else {
             return ["status" => '2', "message" => $response_data["errorText"]];
