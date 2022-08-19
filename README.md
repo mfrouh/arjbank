@@ -44,7 +44,7 @@ use MFrouh\ArjBank\Facades\ArjBank;
 ```
 
 
-## Get Result From trandata from Success Payment In Response Url
+## Get Result From trandata from Response Url
 
 ```php
 
