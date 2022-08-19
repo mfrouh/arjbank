@@ -90,7 +90,7 @@ class BaseClass
         $raw = urldecode($decrypted);
         $dataArr = json_decode($raw, true);
         if (isset($dataArr[0]['errorText'])) {
-            return ["status" => 400, 'data' => $dataArr[0]];
+            return ["status" => '2', 'data' => $dataArr[0]];
         }
         $paymentStatus = $dataArr[0]["result"];
         if (isset($paymentStatus) && $paymentStatus === 'CAPTURED') {

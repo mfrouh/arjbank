@@ -42,3 +42,14 @@ use MFrouh\ArjBank\Facades\ArjBank;
  ArjBank::merchantPayment($card_details , $amount, 'response-url', 'error-url');
 
 ```
+
+
+## Get Result From trandata from Success Payment In Response Url
+
+```php
+
+use MFrouh\ArjBank\Facades\ArjBank;
+
+ ArjBank::result($trandata);
+
+```
