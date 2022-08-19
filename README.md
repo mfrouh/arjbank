@@ -82,6 +82,12 @@ use MFrouh\ArjBank\Facades\ArjBank;
 
 ```
 
+## Response In result method Will Be
+#
+> Success :  ["status" => '1', 'data' => $data];
+#
+> Fail :  ["status" => '2', 'data' => $data];
+#
 ## .env File
 
 ```env
