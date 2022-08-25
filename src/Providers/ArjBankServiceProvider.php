@@ -23,11 +23,6 @@ class ArjBankServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-
-            $this->publishes([
-                __DIR__ . '/../config/ArjBank.php' => config_path('ArjBank.php'),
-            ], 'ArjBank');
-        }
+    
     }
 }
