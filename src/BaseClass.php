@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class BaseClass
 {
-    public function merchantPayment(array $paymentData, int $amount = 0, string $response_url, string $error_url)
+    public function merchantPayment(array $paymentData, array $optionalData, int $amount = 0, string $response_url, string $error_url)
     {
         $trackId = rand(111111111, 999999999);
 
@@ -19,7 +19,7 @@ class BaseClass
             "errorURL" => $error_url,
             "trackId" => (string) $trackId,
             "amt" => (string) $amount,
-        ] + $paymentData;
+        ] + $paymentData + $optionalData;
 
         $encoded_data = $this->wrapData(json_encode($data));
 
@@ -45,7 +45,7 @@ class BaseClass
         }
     }
 
-    public function bankHostedPayment(int $amount = 0, string $response_url, string $error_url)
+    public function bankHostedPayment(array $optionalData, int $amount = 0, string $response_url, string $error_url)
     {
         $trackId = rand(111111111, 999999999);
 
@@ -58,7 +58,7 @@ class BaseClass
             "errorURL" => $error_url,
             "trackId" => (string) $trackId,
             "amt" => (string) $amount,
-        ];
+        ] + $optionalData;
 
         $encoded_data = $this->wrapData(json_encode($data));
 
@@ -77,7 +77,7 @@ class BaseClass
         $response_data = json_decode($response, true)[0];
 
         if ($response_data["status"] == "1") {
-            $url = "https:" . explode(":", $response_data["result"])[2].'?PaymentID='.explode(":", $response_data["result"])[0];
+            $url = "https:" . explode(":", $response_data["result"])[2] . '?PaymentID=' . explode(":", $response_data["result"])[0];
             return ["status" => '1', "url" => $url];
         } else {
             return ["status" => '2', "message" => $response_data["errorText"]];
