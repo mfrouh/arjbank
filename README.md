@@ -29,8 +29,8 @@ use MFrouh\ArjBank\Facades\ArjBank;
     "udf4" => null,
     "udf5" => null,
  ];
- 
- ArjBank::bankHostedPayment($optional_data , $amount, 'response-url', 'error-url');
+
+ ArjBank::bankHostedPayment($amount, 'response-url', 'error-url' , $optional_data);
 
 ```
 
@@ -75,7 +75,7 @@ use MFrouh\ArjBank\Facades\ArjBank;
     "udf5" => null,
  ];
 
- ArjBank::merchantPayment($card_details , $optional_data , $amount, 'response-url', 'error-url');
+ ArjBank::merchantPayment($card_details , $amount, 'response-url', 'error-url', $optional_data);
 
 ```
 

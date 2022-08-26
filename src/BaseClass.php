@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class BaseClass
 {
-    public function merchantPayment(array $paymentData, array $optionalData, int $amount = 0, string $response_url, string $error_url)
+    public function merchantPayment(array $paymentData, int $amount = 0, string $response_url, string $error_url, array $optionalData = [])
     {
         $trackId = rand(111111111, 999999999);
 
@@ -45,7 +45,7 @@ class BaseClass
         }
     }
 
-    public function bankHostedPayment(array $optionalData, int $amount = 0, string $response_url, string $error_url)
+    public function bankHostedPayment(int $amount = 0, string $response_url, string $error_url, array $optionalData = [])
     {
         $trackId = rand(111111111, 999999999);
 
