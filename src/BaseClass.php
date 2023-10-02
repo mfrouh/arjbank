@@ -14,7 +14,7 @@ class BaseClass
             "id" => config('ArjBank.tranportal_id'),
             "password" => config('ArjBank.tranportal_password'),
             "action" => "1",
-            "currencyCode" => "682",
+            "currencyCode" => config('ArjBank.currency_code'),
             "responseURL" => $response_url,
             "errorURL" => $error_url,
             "trackId" => (string) $trackId,

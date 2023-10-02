@@ -9,4 +9,5 @@ return [
     'tranportal_id' => env('ARJ_TRANPORTAL_ID'), // your tranportal id
     'tranportal_password' => env('ARJ_TRANPORTAL_PASSWORD'), // your tranportal password
     "resource_key" => env('ARJ_RESOURCE_KEY'), // your resource key
+    "currency_code" => env('ARJ_CURRENCY_CODE'),
 ];
