@@ -59,9 +59,9 @@ use MFrouh\ArjBank\Facades\ArjBank;
 use MFrouh\ArjBank\Facades\ArjBank;
 
  $card_details = [
-     "expYear" => (string) request('expiry_year'),
+     "expYear" => (string) '20'.request('expiry_year'),
      "expMonth" => (string) request('expiry_month'),
-     "card_holder" => (string) request('card_holder'),
+     "member" => (string) request('card_holder'),
      "cvv2" => (string) request('cvv'),
      "cardNo" => (string) request('card_number'),
      "cardType" => "C",
